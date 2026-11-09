@@ -6,7 +6,9 @@ namespace GraphicsEngineMabob
     {
         private Bitmap frameBuffer;
         private System.Windows.Forms.Timer renderTimer;
-        private mesh cubeMesh;
+        private mesh cubeMesh1;
+        private mesh cubeMesh2;
+        private mesh cubeMesh3;
         private mesh customMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
@@ -25,7 +27,10 @@ namespace GraphicsEngineMabob
             this.KeyDown += RenderForm_KeyDown;
 
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
-            cubeMesh = mesh.CreateCube();
+            cubeMesh1 = mesh.CreateCube(1);
+            cubeMesh2 = mesh.CreateCube(1.5f);
+
+
 
             vector3d v1 = new vector3d { x = -2f, y = -2f, z = -2f };
             vector3d v2 = new vector3d { x = -2f, y = 2f, z = -2f };
@@ -49,12 +54,13 @@ namespace GraphicsEngineMabob
 
             List<mesh> meshes = new List<mesh>
             {
-                cubeMesh,
+                cubeMesh1,
+                cubeMesh2,
                 customMesh
             };
 
             renderTimer = new System.Windows.Forms.Timer();
-            renderTimer.Interval = 16;
+            renderTimer.Interval = 2;
             renderTimer.Tick += (sender, e) =>
             {
                 if (isAutoSpinning)
@@ -145,10 +151,12 @@ namespace GraphicsEngineMabob
 
         private void UpdateAndRender(List<mesh> meshes)
         {
+            Random rng = new Random();
             using (Graphics g = Graphics.FromImage(frameBuffer))
             {
-                g.Clear(Color.Black);
-                Pen pen = new Pen(Color.Cyan, 1.5f);
+                g.Clear(Color.Blue);
+
+                Pen pen = new Pen(Color.DarkRed, 1.5f);
 
                 foreach (mesh m in meshes)
                 {
@@ -161,7 +169,10 @@ namespace GraphicsEngineMabob
                         g.DrawLine(pen, p1.x, p1.y, p2.x, p2.y);
                         g.DrawLine(pen, p2.x, p2.y, p3.x, p3.y);
                         g.DrawLine(pen, p3.x, p3.y, p1.x, p1.y);
+
                     }
+
+
                 }
             }
         }

@@ -26,40 +26,6 @@
                 p = new vector3d[] { v1, v2, v3 };
             }
         }
-        public class mesh
-        {
-            public List<triangle> tris;
-
-            public mesh()
-            {
-                tris = new List<triangle>();
-            }
-            public static mesh CreateCube()
-            {
-                mesh m = new mesh();
-
-                // south
-                m.tris.Add(new triangle(new vector3d(-1, -1, -1), new vector3d(-1, 1, -1), new vector3d(1, 1, -1)));
-                m.tris.Add(new triangle(new vector3d(-1, -1, -1), new vector3d(1, 1, -1), new vector3d(1, -1, -1)));
-                // east
-                m.tris.Add(new triangle(new vector3d(1, -1, -1), new vector3d(1, 1, -1), new vector3d(1, 1, 1)));
-                m.tris.Add(new triangle(new vector3d(1, -1, -1), new vector3d(1, 1, 1), new vector3d(1, -1, 1)));
-                // north
-                m.tris.Add(new triangle(new vector3d(1, -1, 1), new vector3d(1, 1, 1), new vector3d(-1, 1, 1)));
-                m.tris.Add(new triangle(new vector3d(1, -1, 1), new vector3d(-1, 1, 1), new vector3d(-1, -1, 1)));
-                // west
-                m.tris.Add(new triangle(new vector3d(-1, -1, 1), new vector3d(-1, 1, 1), new vector3d(-1, 1, -1)));
-                m.tris.Add(new triangle(new vector3d(-1, -1, 1), new vector3d(-1, 1, -1), new vector3d(-1, -1, -1)));
-                // top
-                m.tris.Add(new triangle(new vector3d(-1, 1, -1), new vector3d(-1, 1, 1), new vector3d(1, 1, 1)));
-                m.tris.Add(new triangle(new vector3d(-1, 1, -1), new vector3d(1, 1, 1), new vector3d(1, 1, -1)));
-                // bottom
-                m.tris.Add(new triangle(new vector3d(-1, -1, 1), new vector3d(-1, -1, -1), new vector3d(1, -1, -1)));
-                m.tris.Add(new triangle(new vector3d(-1, -1, 1), new vector3d(1, -1, -1), new vector3d(1, -1, 1)));
-
-                return m;
-            }
-        }
         static void Main(string[] args)
         {
             vector3d v1 = new vector3d { x = 0.0f, y = 1.0f, z = 0.0f };
@@ -71,5 +37,7 @@
             myMesh.tris.Add(tri);
             Application.Run(new RenderForm());
         }
+
+
     }
 }
