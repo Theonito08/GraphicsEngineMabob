@@ -8,4 +8,25 @@
 	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.deps.json" />
+    <Content Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.runtimeconfig.json" />
+    <Content Include="bin\Debug\net9.0\GraphicsEngineMabob.deps.json" />
+    <Content Include="bin\Debug\net9.0\GraphicsEngineMabob.runtimeconfig.json" />
+    <Content Include="bin\Release\net9.0-windows\GraphicsEngineMabob.deps.json" />
+    <Content Include="bin\Release\net9.0-windows\GraphicsEngineMabob.runtimeconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.dll" />
+    <None Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.exe" />
+    <None Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.pdb" />
+    <None Include="bin\Debug\net9.0\GraphicsEngineMabob.dll" />
+    <None Include="bin\Debug\net9.0\GraphicsEngineMabob.exe" />
+    <None Include="bin\Debug\net9.0\GraphicsEngineMabob.pdb" />
+    <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.dll" />
+    <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.exe" />
+    <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.pdb" />
+  </ItemGroup>
+
 </Project>

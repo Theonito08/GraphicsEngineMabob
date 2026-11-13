@@ -9,7 +9,8 @@ namespace GraphicsEngineMabob
         private mesh cubeMesh1;
         private mesh cubeMesh2;
         private mesh cubeMesh3;
-        private mesh customMesh;
+        private mesh customMesh1;
+        private mesh customMesh2;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -38,25 +39,44 @@ namespace GraphicsEngineMabob
             vector3d v4 = new vector3d { x = 2f, y = -2f, z = -2f };
             vector3d v5 = new vector3d { x = 0f, y = 0f, z = 2f };
 
+            vector3d v6 = new vector3d { x = -2f, y = -2f, z = -2f };
+            vector3d v7 = new vector3d { x = -2f, y = 2f, z = -2f };
+            vector3d v8 = new vector3d { x = 2f, y = 2f, z = -2f };
+            vector3d v9 = new vector3d { x = 2f, y = -2f, z = -2f };
+            vector3d v10 = new vector3d { x = 0f, y = 0f, z = -5f };
+
             triangle t1 = new triangle(v1, v2, v3);
             triangle t2 = new triangle(v1, v2, v4);
             triangle t3 = new triangle(v1, v3, v4);
             triangle t4 = new triangle(v1, v2, v5);
             triangle t5 = new triangle(v1, v3, v5);
             triangle t6 = new triangle(v2, v4, v5);
-            triangle[] triangles = { t1, t2, t3, t4, t5, t6 };
+            triangle[] triangles1 = { t1, t2, t3, t4, t5, t6 };
 
-            customMesh = new mesh();
-            foreach (triangle t in triangles)
+            triangle t7 = new triangle(v6, v7, v8);
+            triangle t8 = new triangle(v6, v7, v9);
+            triangle t9 = new triangle(v6, v8, v9);
+            triangle t10 = new triangle(v6, v7, v10);
+            triangle t11 = new triangle(v6, v8, v10);
+            triangle t12 = new triangle(v8, v9, v10);
+            triangle[] triangles2 = { t7, t8, t9, t10, t11, t12 };
+
+            customMesh1 = new mesh();
+            customMesh2 = new mesh();
+            foreach (triangle t in triangles1)
             {
-                customMesh.tris.Add(t);
+                customMesh1.tris.Add(t);
             }
-
+            foreach (triangle t in triangles2)
+            {
+                customMesh2.tris.Add(t);
+            }
             List<mesh> meshes = new List<mesh>
             {
-                cubeMesh1,
-                cubeMesh2,
-                customMesh
+                //cubeMesh1,
+                //cubeMesh2,
+                customMesh1,
+                customMesh2
             };
 
             renderTimer = new System.Windows.Forms.Timer();
