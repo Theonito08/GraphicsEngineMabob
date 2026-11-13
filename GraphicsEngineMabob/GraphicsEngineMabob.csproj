@@ -9,12 +9,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\net9.0-windows\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.GlobalUsings.g.cs" />
+    <Compile Include="obj\Debug\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net9.0\GraphicsEngineMabob.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net9.0\GraphicsEngineMabob.GlobalUsings.g.cs" />
+    <Compile Include="obj\Release\net9.0-windows\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\net9.0-windows\GraphicsEngineMabob.AssemblyInfo.cs" />
+    <Compile Include="obj\Release\net9.0-windows\GraphicsEngineMabob.GlobalUsings.g.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.deps.json" />
     <Content Include="bin\Debug\net9.0-windows\GraphicsEngineMabob.runtimeconfig.json" />
     <Content Include="bin\Debug\net9.0\GraphicsEngineMabob.deps.json" />
     <Content Include="bin\Debug\net9.0\GraphicsEngineMabob.runtimeconfig.json" />
     <Content Include="bin\Release\net9.0-windows\GraphicsEngineMabob.deps.json" />
     <Content Include="bin\Release\net9.0-windows\GraphicsEngineMabob.runtimeconfig.json" />
+    <Content Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.designer.deps.json" />
+    <Content Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.designer.runtimeconfig.json" />
+    <Content Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.sourcelink.json" />
+    <Content Include="obj\Debug\net9.0\GraphicsEngineMabob.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\GraphicsEngineMabob.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\Release\net9.0-windows\GraphicsEngineMabob.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\net9.0-windows\GraphicsEngineMabob.designer.deps.json" />
+    <Content Include="obj\Release\net9.0-windows\GraphicsEngineMabob.designer.runtimeconfig.json" />
+    <Content Include="obj\Release\net9.0-windows\GraphicsEngineMabob.sourcelink.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +50,46 @@
     <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.dll" />
     <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.exe" />
     <None Include="bin\Release\net9.0-windows\GraphicsEngineMabob.pdb" />
+    <None Include="obj\Debug\net9.0-windows\apphost.exe" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.assets.cache" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.dll" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.pdb" />
+    <None Include="obj\Debug\net9.0-windows\GraphicsEngineMabob.RenderForm.resources" />
+    <None Include="obj\Debug\net9.0-windows\refint\GraphicsEngineMabob.dll" />
+    <None Include="obj\Debug\net9.0-windows\ref\GraphicsEngineMabob.dll" />
+    <None Include="obj\Debug\net9.0\apphost.exe" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.assets.cache" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.dll" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net9.0\GraphicsEngineMabob.pdb" />
+    <None Include="obj\Debug\net9.0\refint\GraphicsEngineMabob.dll" />
+    <None Include="obj\Debug\net9.0\ref\GraphicsEngineMabob.dll" />
+    <None Include="obj\GraphicsEngineMabob.csproj.nuget.g.props" />
+    <None Include="obj\GraphicsEngineMabob.csproj.nuget.g.targets" />
+    <None Include="obj\project.nuget.cache" />
+    <None Include="obj\Release\net9.0-windows\apphost.exe" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.AssemblyInfoInputs.cache" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.assets.cache" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.csproj.GenerateResource.cache" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.dll" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.genruntimeconfig.cache" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.pdb" />
+    <None Include="obj\Release\net9.0-windows\GraphicsEngineMabob.RenderForm.resources" />
+    <None Include="obj\Release\net9.0-windows\refint\GraphicsEngineMabob.dll" />
+    <None Include="obj\Release\net9.0-windows\ref\GraphicsEngineMabob.dll" />
   </ItemGroup>
 
 </Project>
