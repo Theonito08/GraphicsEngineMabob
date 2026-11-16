@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using static GraphicsEngineMabob.Program;
+﻿using static GraphicsEngineMabob.Program;
 namespace GraphicsEngineMabob
 {
     public partial class RenderForm : Form
@@ -14,6 +10,11 @@ namespace GraphicsEngineMabob
         private mesh cubeMesh3;
         private mesh customMesh;
         private mesh boxMesh;
+        private mesh boxMesh2;
+        private mesh boxMesh3;
+        private mesh boxMesh4;
+        private mesh HeadMesh;
+        private mesh planeMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -34,6 +35,11 @@ namespace GraphicsEngineMabob
             cubeMesh1 = mesh.CreateCube(1);
             cubeMesh2 = mesh.CreateCube(1.5f);
             boxMesh = mesh.CreateBox(new vector3d(0, 0, 0), new vector3d(1, 2, 1));
+            boxMesh2 = mesh.Transform(new vector3d(0, (float)2.01, 0), boxMesh);
+            boxMesh3 = mesh.Transform(new vector3d((float)1.01, 0, 0), boxMesh);
+            boxMesh4 = mesh.Transform(new vector3d((float)-1.01, 0, 0), boxMesh);
+            HeadMesh = mesh.Transform(new vector3d((float)0.5, (float)-0.75, (float)0.5), mesh.CreateCube((float)0.75));
+            //planeMesh = mesh.CreateBox(new vector3d(-50, -50, 0), new vector3d(50, 50, 0));
 
 
             vector3d v1 = new vector3d { x = -2f, y = -2f, z = -2f };
@@ -60,8 +66,13 @@ namespace GraphicsEngineMabob
             {
                 //cubeMesh1,
                 //cubeMesh2,
-                customMesh,
-               boxMesh
+                //customMesh,
+                boxMesh,
+                boxMesh2,
+                boxMesh3,
+                boxMesh4,
+                HeadMesh
+               // planeMesh
             };
 
             renderTimer = new System.Windows.Forms.Timer();

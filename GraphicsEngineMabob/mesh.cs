@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using static GraphicsEngineMabob.Program;
+﻿using static GraphicsEngineMabob.Program;
 public class mesh
 {
     public List<triangle> tris;
@@ -69,6 +68,28 @@ public class mesh
         m.tris.Add(t9);
         m.tris.Add(t10);
         m.tris.Add(t11);
+        return m;
+    }
+
+    public static mesh Transform(vector3d transformationVector, mesh meshIn)
+    {
+        mesh m = new mesh();
+        for (int i = 0; i < meshIn.tris.Count; i++)
+        {
+            float newXv1 = meshIn.tris[i].p[0].x + transformationVector.x;
+            float newYv1 = meshIn.tris[i].p[0].y + transformationVector.y;
+            float newZv1 = meshIn.tris[i].p[0].z + transformationVector.z;
+            vector3d v1 = new vector3d(newXv1, newYv1, newZv1);
+            float newXv2 = meshIn.tris[i].p[1].x + transformationVector.x;
+            float newYv2 = meshIn.tris[i].p[1].y + transformationVector.y;
+            float newZv2 = meshIn.tris[i].p[1].z + transformationVector.z;
+            vector3d v2 = new vector3d(newXv2, newYv2, newZv2);
+            float newXv3 = meshIn.tris[i].p[2].x + transformationVector.x;
+            float newYv3 = meshIn.tris[i].p[2].y + transformationVector.y;
+            float newZv3 = meshIn.tris[i].p[2].z + transformationVector.z;
+            vector3d v3 = new vector3d(newXv3, newYv3, newZv3);
+            m.tris.Add(new triangle(v1, v2, v3));
+        }
         return m;
     }
 }
