@@ -1,5 +1,5 @@
-﻿using static GraphicsEngineMabob.Program;
-
+﻿using System.Collections.Generic;
+using static GraphicsEngineMabob.Program;
 public class mesh
 {
     public List<triangle> tris;

@@ -1,4 +1,5 @@
-﻿namespace GraphicsEngineMabob
+﻿using System.Windows.Forms;
+namespace GraphicsEngineMabob
 {
     public static class Program
     {

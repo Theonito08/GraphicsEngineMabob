@@ -1,5 +1,8 @@
-﻿using static GraphicsEngineMabob.Program;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using static GraphicsEngineMabob.Program;
 namespace GraphicsEngineMabob
 {
     public partial class RenderForm : Form
