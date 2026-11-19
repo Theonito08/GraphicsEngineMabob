@@ -8,6 +8,7 @@ namespace GraphicsEngineMabob
         private mesh cylinderMesh;
         private mesh cubeMesh;
         private mesh boxMesh;
+        private mesh coneMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -21,14 +22,19 @@ namespace GraphicsEngineMabob
             this.Text = "GraphicsEngineMabob";
             this.DoubleBuffered = true;
             this.KeyPreview = true;
+
+
             cylinderMesh = mesh.CreateCylinder(1.5f, 1f, 16);
             cubeMesh = mesh.CreateCube(1f);
             boxMesh = mesh.CreateBox(new vector3d(1, 1, 1), new vector3d(2, 2, 2));
+            coneMesh = mesh.CreateCone(new vector3d(0, 0, 0), new vector3d(2, 2, 0), 2, -1, 32);
+
             this.KeyDown += RenderForm_KeyDown;
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
             List<mesh> meshes = new List<mesh>
             {
-                cylinderMesh,
+                //cylinderMesh,
+                coneMesh,
                 //mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
                 //mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh)),
                 //cubeMesh,
@@ -129,9 +135,9 @@ namespace GraphicsEngineMabob
             Random rng = new Random();
             using (Graphics g = Graphics.FromImage(frameBuffer))
             {
-                g.Clear(Color.Blue);
+                g.Clear(Color.Black);
 
-                Pen pen = new Pen(Color.DarkRed, 1.5f);
+                Pen pen = new Pen(Color.Green, 1.5f);
 
                 foreach (mesh m in meshes)
                 {

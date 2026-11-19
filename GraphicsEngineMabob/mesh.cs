@@ -101,6 +101,34 @@ public class mesh
         return m;
     }
 
+    public static mesh CreateCone(vector3d basePoint, vector3d capPoint, float baseRadius, float capRadius, int segments)
+    {
+        mesh m = new mesh();
+        for (int i = 0; i < segments; i++)
+        {
+            float angle1 = (i / (float)segments) * (2.0f * MathF.PI);
+            float angle2 = ((i + 1) / (float)segments) * (2.0f * MathF.PI);
+
+            float cos1 = MathF.Cos(angle1);
+            float sin1 = MathF.Sin(angle1);
+            float cos2 = MathF.Cos(angle2);
+            float sin2 = MathF.Sin(angle2);
+            vector3d capV1 = new vector3d(capPoint.x + (capRadius * cos1), capPoint.y, capPoint.z + (capRadius * sin1));
+            vector3d capV2 = new vector3d(capPoint.x + (capRadius * cos2), capPoint.y, capPoint.z + (capRadius * sin2));
+            vector3d baseV1 = new vector3d(basePoint.x + (baseRadius * cos1), basePoint.y, basePoint.z + (baseRadius * sin1));
+            vector3d baseV2 = new vector3d(basePoint.x + (baseRadius * cos2), basePoint.y, basePoint.z + (baseRadius * sin2));
+
+            m.tris.Add(new triangle(capV1, baseV1, baseV2));
+            m.tris.Add(new triangle(capV1, baseV2, capV2));
+
+            m.tris.Add(new triangle(capPoint, capV1, capV2));
+
+            m.tris.Add(new triangle(basePoint, baseV2, baseV1));
+
+        }
+        return m;
+    }
+
     private static void AddQuad(mesh m, vector3d a, vector3d b, vector3d c, vector3d d)
     {
         m.tris.Add(new triangle(a, b, c));
@@ -171,5 +199,49 @@ public class mesh
             m.tris.Add(new triangle(v1, v2, v3));
         }
         return m;
+    }
+
+    public static mesh RotateMesh(mesh meshIn, float angleXDeg, float angleYDeg, float angleZDeg)
+    {
+        float angleX = angleXDeg * (MathF.PI / 180.0f);
+        float angleY = angleYDeg * (MathF.PI / 180.0f);
+        float angleZ = angleZDeg * (MathF.PI / 180.0f);
+        mesh m = new mesh();
+        for (int i = 0; i < meshIn.tris.Count; i++)
+        {
+            vector3d v1 = RotateVector(meshIn.tris[i].p[0], angleX, angleY, angleZ);
+            vector3d v2 = RotateVector(meshIn.tris[i].p[1], angleX, angleY, angleZ);
+            vector3d v3 = RotateVector(meshIn.tris[i].p[2], angleX, angleY, angleZ);
+
+            m.tris.Add(new triangle(v1, v2, v3));
+        }
+        return m;
+    }
+
+    public static vector3d RotateVector(vector3d v, float angleX, float angleY, float angleZ)
+    {
+        float cosX = MathF.Cos(angleX);
+        float sinX = MathF.Sin(angleX);
+        float cosY = MathF.Cos(angleY);
+        float sinY = MathF.Sin(angleY);
+        float cosZ = MathF.Cos(angleZ);
+        float sinZ = MathF.Sin(angleZ);
+
+        // x axis
+        float y1 = v.y * cosX - v.z * sinX;
+        float z1 = v.y * sinX + v.z * cosX;
+        float x1 = v.x;
+
+        // y axis
+        float x2 = x1 * cosY + z1 * sinY;
+        float z2 = -x1 * sinY + z1 * cosY;
+        float y2 = y1;
+
+        // z axis
+        float x3 = x2 * cosZ - y2 * sinZ;
+        float y3 = x2 * sinZ + y2 * cosZ;
+        float z3 = z2;
+
+        return new vector3d(x3, y3, z3);
     }
 }
