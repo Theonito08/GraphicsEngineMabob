@@ -5,9 +5,7 @@ namespace GraphicsEngineMabob
     {
         private Bitmap frameBuffer;
         private System.Windows.Forms.Timer renderTimer;
-        private mesh CylinderMesh32;
-        private mesh CylinderMesh32Second;
-        private mesh cubeMesh;
+        private mesh cylinderMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -21,21 +19,18 @@ namespace GraphicsEngineMabob
             this.Text = "GraphicsEngineMabob";
             this.DoubleBuffered = true;
             this.KeyPreview = true;
-
+            cylinderMesh = mesh.CreateCylinder(1.5f, 1f, 16);
             this.KeyDown += RenderForm_KeyDown;
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
-            CylinderMesh32 = mesh.Transform(new vector3d(2,0,0),mesh.CreateCylinder(1, 0.05f, 32));
-            CylinderMesh32Second = mesh.Transform(new vector3d(-4, 0, 0), CylinderMesh32);
-            cubeMesh = mesh.CreateCube(0.5f);
             List<mesh> meshes = new List<mesh>
             {
-               CylinderMesh32,
-               CylinderMesh32Second,
-               cubeMesh
+                cylinderMesh,
+                mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
+                mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh))
             };
 
             renderTimer = new System.Windows.Forms.Timer();
-            renderTimer.Interval = 2;
+            renderTimer.Interval = 8;
             renderTimer.Tick += (sender, e) =>
             {
                 if (isAutoSpinning)
@@ -116,7 +111,7 @@ namespace GraphicsEngineMabob
             }
 
             outputVertex.x += 1.0f;
-            outputVertex.y += 1.0f;
+            outputVertex.y = 1.0f - outputVertex.y;
             outputVertex.x *= 0.5f * ScreenWidth;
             outputVertex.y *= 0.5f * ScreenHeight;
             outputVertex.z = rotX_z;

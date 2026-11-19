@@ -117,5 +117,47 @@ public class mesh
         return m;
     }
 
+    public static mesh Enlarge(float scale, mesh meshIn)
+    {
+        mesh m = new mesh();
+        for (int i = 0; i < meshIn.tris.Count; i++)
+        {
+            float newXv1 = meshIn.tris[i].p[0].x * scale;
+            float newYv1 = meshIn.tris[i].p[0].y * scale;
+            float newZv1 = meshIn.tris[i].p[0].z * scale;
+            vector3d v1 = new vector3d(newXv1, newYv1, newZv1);
+            float newXv2 = meshIn.tris[i].p[1].x * scale;
+            float newYv2 = meshIn.tris[i].p[1].y * scale;
+            float newZv2 = meshIn.tris[i].p[1].z * scale;
+            vector3d v2 = new vector3d(newXv2, newYv2, newZv2);
+            float newXv3 = meshIn.tris[i].p[2].x * scale;
+            float newYv3 = meshIn.tris[i].p[2].y * scale;
+            float newZv3 = meshIn.tris[i].p[2].z * scale;
+            vector3d v3 = new vector3d(newXv3, newYv3, newZv3);
+            m.tris.Add(new triangle(v1, v2, v3));
+        }
+        return m;
+    }
 
+    public static mesh Stretch(float scaleX, float scaleY, float scaleZ, mesh meshIn)
+    {
+        mesh m = new mesh();
+        for (int i = 0; i < meshIn.tris.Count; i++)
+        {
+            float newXv1 = meshIn.tris[i].p[0].x * scaleX;
+            float newYv1 = meshIn.tris[i].p[0].y * scaleY;
+            float newZv1 = meshIn.tris[i].p[0].z * scaleZ;
+            vector3d v1 = new vector3d(newXv1, newYv1, newZv1);
+            float newXv2 = meshIn.tris[i].p[1].x * scaleX;
+            float newYv2 = meshIn.tris[i].p[1].y * scaleY;
+            float newZv2 = meshIn.tris[i].p[1].z * scaleZ;
+            vector3d v2 = new vector3d(newXv2, newYv2, newZv2);
+            float newXv3 = meshIn.tris[i].p[2].x * scaleX;
+            float newYv3 = meshIn.tris[i].p[2].y * scaleY;
+            float newZv3 = meshIn.tris[i].p[2].z * scaleZ;
+            vector3d v3 = new vector3d(newXv3, newYv3, newZv3);
+            m.tris.Add(new triangle(v1, v2, v3));
+        }
+        return m;
+    }
 }
