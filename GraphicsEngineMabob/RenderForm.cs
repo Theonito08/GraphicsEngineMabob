@@ -6,6 +6,8 @@ namespace GraphicsEngineMabob
         private Bitmap frameBuffer;
         private System.Windows.Forms.Timer renderTimer;
         private mesh cylinderMesh;
+        private mesh cubeMesh;
+        private mesh boxMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -20,17 +22,20 @@ namespace GraphicsEngineMabob
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             cylinderMesh = mesh.CreateCylinder(1.5f, 1f, 16);
+            cubeMesh = mesh.CreateCube(1f);
+            boxMesh = mesh.CreateBox(new vector3d(1, 1, 1), new vector3d(2, 2, 2));
             this.KeyDown += RenderForm_KeyDown;
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
             List<mesh> meshes = new List<mesh>
             {
                 cylinderMesh,
-                mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
-                mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh))
+                //mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
+                //mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh)),
+                //cubeMesh,
             };
 
             renderTimer = new System.Windows.Forms.Timer();
-            renderTimer.Interval = 8;
+            renderTimer.Interval = 4;
             renderTimer.Tick += (sender, e) =>
             {
                 if (isAutoSpinning)
