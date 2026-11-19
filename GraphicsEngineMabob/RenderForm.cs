@@ -1,20 +1,13 @@
-﻿using static GraphicsEngineMabob.Program;
+using static GraphicsEngineMabob.Program;
 namespace GraphicsEngineMabob
 {
     public partial class RenderForm : Form
     {
         private Bitmap frameBuffer;
         private System.Windows.Forms.Timer renderTimer;
-        private mesh cubeMesh1;
-        private mesh cubeMesh2;
-        private mesh cubeMesh3;
-        private mesh customMesh;
-        private mesh boxMesh;
-        private mesh boxMesh2;
-        private mesh boxMesh3;
-        private mesh boxMesh4;
-        private mesh HeadMesh;
-        private mesh planeMesh;
+        private mesh CylinderMesh32;
+        private mesh CylinderMesh32Second;
+        private mesh cubeMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -30,49 +23,15 @@ namespace GraphicsEngineMabob
             this.KeyPreview = true;
 
             this.KeyDown += RenderForm_KeyDown;
-
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
-            cubeMesh1 = mesh.CreateCube(1);
-            cubeMesh2 = mesh.CreateCube(1.5f);
-            boxMesh = mesh.CreateBox(new vector3d(0, 0, 0), new vector3d(1, 2, 1));
-            boxMesh2 = mesh.Transform(new vector3d(0, (float)2.01, 0), boxMesh);
-            boxMesh3 = mesh.Transform(new vector3d((float)1.01, 0, 0), boxMesh);
-            boxMesh4 = mesh.Transform(new vector3d((float)-1.01, 0, 0), boxMesh);
-            HeadMesh = mesh.Transform(new vector3d((float)0.5, (float)-0.75, (float)0.5), mesh.CreateCube((float)0.75));
-            //planeMesh = mesh.CreateBox(new vector3d(-50, -50, 0), new vector3d(50, 50, 0));
-
-
-            vector3d v1 = new vector3d { x = -2f, y = -2f, z = -2f };
-            vector3d v2 = new vector3d { x = -2f, y = 2f, z = -2f };
-            vector3d v3 = new vector3d { x = 2f, y = 2f, z = -2f };
-            vector3d v4 = new vector3d { x = 2f, y = -2f, z = -2f };
-            vector3d v5 = new vector3d { x = 0f, y = 0f, z = 2f };
-
-            triangle t1 = new triangle(v1, v2, v3);
-            triangle t2 = new triangle(v1, v2, v4);
-            triangle t3 = new triangle(v1, v3, v4);
-            triangle t4 = new triangle(v1, v2, v5);
-            triangle t5 = new triangle(v1, v3, v5);
-            triangle t6 = new triangle(v2, v4, v5);
-            triangle[] triangles = { t1, t2, t3, t4, t5, t6 };
-
-            customMesh = new mesh();
-            foreach (triangle t in triangles)
-            {
-                customMesh.tris.Add(t);
-            }
-
+            CylinderMesh32 = mesh.Transform(new vector3d(2,0,0),mesh.CreateCylinder(1, 0.05f, 32));
+            CylinderMesh32Second = mesh.Transform(new vector3d(-4, 0, 0), CylinderMesh32);
+            cubeMesh = mesh.CreateCube(0.5f);
             List<mesh> meshes = new List<mesh>
             {
-                //cubeMesh1,
-                //cubeMesh2,
-                //customMesh,
-                boxMesh,
-                boxMesh2,
-                boxMesh3,
-                boxMesh4,
-                HeadMesh
-               // planeMesh
+               CylinderMesh32,
+               CylinderMesh32Second,
+               cubeMesh
             };
 
             renderTimer = new System.Windows.Forms.Timer();
