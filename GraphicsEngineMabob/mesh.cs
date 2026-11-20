@@ -129,6 +129,36 @@ public class mesh
         return m;
     }
 
+    public static mesh CreateSphere(vector3d center, float radius, int segments)
+    {
+        mesh m = new mesh();
+        vector3d[,] vertices = new vector3d[segments + 1, segments + 1];
+        for (int i = 0; i <= segments; i++)
+        {
+            float angle1 = i * (float)Math.PI / segments;
+            float sin1 = (float)Math.Sin(angle1);
+            float cos1 = (float)Math.Cos(angle1);
+            for (int j = 0; j <= segments; j++)
+            {
+                float angle2 = (j / (float)segments) * (2.0f * MathF.PI);
+                float sin2 = (float)Math.Sin(angle2);
+                float cos2 = (float)Math.Cos(angle2);
+                vertices[i, j] = new vector3d(center.x + radius * sin1 * cos2, center.y + radius * cos1, center.z + radius * sin1 * sin2);
+            }
+        }
+        for (int i = 0; i < segments; i++)
+        {
+            for (int j = 0; j < segments; j++)
+            {
+                vector3d v00 = vertices[i, j];
+                vector3d v01 = vertices[i, j + 1];
+                vector3d v10 = vertices[i + 1, j];
+                vector3d v11 = vertices[i + 1, j + 1];
+                AddQuad(m, v00, v01, v11, v10);
+            }
+        }
+        return m;
+    }
     private static void AddQuad(mesh m, vector3d a, vector3d b, vector3d c, vector3d d)
     {
         m.tris.Add(new triangle(a, b, c));

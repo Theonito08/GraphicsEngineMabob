@@ -9,6 +9,7 @@ namespace GraphicsEngineMabob
         private mesh cubeMesh;
         private mesh boxMesh;
         private mesh coneMesh;
+        private mesh sphereMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -27,14 +28,17 @@ namespace GraphicsEngineMabob
             cylinderMesh = mesh.CreateCylinder(1.5f, 1f, 16);
             cubeMesh = mesh.CreateCube(1f);
             boxMesh = mesh.CreateBox(new vector3d(1, 1, 1), new vector3d(2, 2, 2));
-            coneMesh = mesh.CreateCone(new vector3d(0, 0, 0), new vector3d(2, 2, 0), 2, -1, 32);
+            coneMesh = mesh.CreateCone(new vector3d(0, 0, 0), new vector3d(2, 2, 0), 2, -1, 16);
+            sphereMesh = mesh.CreateSphere(new vector3d(0, 0, 0), 1.5f, 16);
 
             this.KeyDown += RenderForm_KeyDown;
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
             List<mesh> meshes = new List<mesh>
             {
                 //cylinderMesh,
-                coneMesh,
+                //coneMesh,
+                mesh.Stretch(0.5f,0.25f,2,sphereMesh),
+                //mesh.Stretch(0.25f,0.125f,2,sphereMesh)
                 //mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
                 //mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh)),
                 //cubeMesh,
