@@ -5,11 +5,6 @@ namespace GraphicsEngineMabob
     {
         private Bitmap frameBuffer;
         private System.Windows.Forms.Timer renderTimer;
-        private mesh cylinderMesh;
-        private mesh cubeMesh;
-        private mesh boxMesh;
-        private mesh coneMesh;
-        private mesh sphereMesh;
         private const int ScreenWidth = 1200;
         private const int ScreenHeight = 1000;
         private float cameraDistance = 8.0f;
@@ -24,26 +19,31 @@ namespace GraphicsEngineMabob
             this.DoubleBuffered = true;
             this.KeyPreview = true;
 
-
-            cylinderMesh = mesh.CreateCylinder(1.5f, 1f, 16);
-            cubeMesh = mesh.CreateCube(1f);
-            boxMesh = mesh.CreateBox(new vector3d(1, 1, 1), new vector3d(2, 2, 2));
-            coneMesh = mesh.CreateCone(new vector3d(0, 0, 0), new vector3d(2, 2, 0), 2, -1, 16);
-            sphereMesh = mesh.CreateSphere(new vector3d(0, 0, 0), 1.5f, 16);
-
             this.KeyDown += RenderForm_KeyDown;
             frameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
+            mesh rocket;
+            mesh body = mesh.CreateCylinder(4.0f, 0.8f, 16);
+            mesh noseCone = mesh.CreateCone(new vector3d(0.0f, 2.0f, 0.0f), new vector3d(0.0f, 3.5f, 0.0f), 0.8f, 0.0f, 16);
+            mesh nozzle = mesh.CreateCone(new vector3d(0.0f, -2.0f, 0.0f), new vector3d(0.0f, -2.5f, 0.0f), 0.5f, 0.7f, 16);
+            rocket = mesh.Combine(body, noseCone, nozzle);
+            for (int i = 0; i < 4; i++)
+            {
+                float angle = i * (2.0f * MathF.PI / 4);
+                mesh fin = new mesh();
+                vector3d v0 = new vector3d(0.8f, -1.8f, 0.0f);
+                vector3d v1 = new vector3d(0.8f, -2.2f, 0.0f);
+                vector3d v2 = new vector3d(1.5f, -2.2f, 0.0f);
+                fin.tris.Add(new triangle(v0, v1, v2));
+                fin.tris.Add(new triangle(v0, v2, v1));
+                fin = mesh.RotateMesh(fin, 0f, angle * (180.0f / MathF.PI), 0f);
+                mesh.AppendMesh(rocket, fin);
+            }
+
             List<mesh> meshes = new List<mesh>
             {
-                //cylinderMesh,
-                //coneMesh,
-                mesh.Stretch(0.5f,0.25f,2,sphereMesh),
-                //mesh.Stretch(0.25f,0.125f,2,sphereMesh)
-                //mesh.Enlarge(0.5f,mesh.Transform(new vector3d(1,2,0), cylinderMesh)),
-                //mesh.Stretch(0.8f,0.8f,2f,mesh.Transform(new vector3d(-1,2,0), cylinderMesh)),
-                //cubeMesh,
-            };
+                rocket
 
+            };
             renderTimer = new System.Windows.Forms.Timer();
             renderTimer.Interval = 4;
             renderTimer.Tick += (sender, e) =>

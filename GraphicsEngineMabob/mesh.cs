@@ -22,12 +22,12 @@ public class mesh
         v[6] = new vector3d(scaleFactor, scaleFactor, scaleFactor); //top right ront
         v[7] = new vector3d(-scaleFactor, scaleFactor, scaleFactor); //top left front
 
-        AddQuad(m, v[4], v[5], v[6], v[7]); // front
-        AddQuad(m, v[1], v[0], v[3], v[2]); // back
-        AddQuad(m, v[0], v[4], v[7], v[3]); // left
-        AddQuad(m, v[5], v[1], v[2], v[6]); // right
-        AddQuad(m, v[3], v[2], v[6], v[7]); // top
-        AddQuad(m, v[4], v[0], v[1], v[5]); // bottom
+        AddQuad(m, ref v[4], ref v[5], ref v[6], ref v[7]); // front
+        AddQuad(m, ref v[1], ref v[0], ref v[3], ref v[2]); // back
+        AddQuad(m, ref v[0], ref v[4], ref v[7], ref v[3]); // left
+        AddQuad(m, ref v[5], ref v[1], ref v[2], ref v[6]); // right
+        AddQuad(m, ref v[3], ref v[2], ref v[6], ref v[7]); // top
+        AddQuad(m, ref v[4], ref v[0], ref v[1], ref v[5]); // bottom
         //rub mah 
         return m;
     }
@@ -47,17 +47,17 @@ public class mesh
         vector3d p7 = new vector3d(minVector.x, maxVector.y, maxVector.z);
 
         // front
-        AddQuad(m, p4, p5, p6, p7);
+        AddQuad(m, ref p4, ref p5, ref p6, ref p7);
         // back
-        AddQuad(m, p1, p0, p3, p2);
+        AddQuad(m, ref p1, ref p0, ref p3, ref p2);
         // left
-        AddQuad(m, p0, p4, p7, p3);
+        AddQuad(m, ref p0, ref p4, ref p7, ref p3);
         // right
-        AddQuad(m, p5, p1, p2, p6);
+        AddQuad(m, ref p5, ref p1, ref p2, ref p6);
         // top
-        AddQuad(m, p3, p2, p6, p7);
+        AddQuad(m, ref p3, ref p2, ref p6, ref p7);
         // bottom
-        AddQuad(m, p4, p0, p1, p5);
+        AddQuad(m, ref p4, ref p0, ref p1, ref p5);
 
         return m;
     }
@@ -154,12 +154,12 @@ public class mesh
                 vector3d v01 = vertices[i, j + 1];
                 vector3d v10 = vertices[i + 1, j];
                 vector3d v11 = vertices[i + 1, j + 1];
-                AddQuad(m, v00, v01, v11, v10);
+                AddQuad(m, ref v00, ref v01, ref v11, ref v10);
             }
         }
         return m;
     }
-    private static void AddQuad(mesh m, vector3d a, vector3d b, vector3d c, vector3d d)
+    private static void AddQuad(mesh m, ref vector3d a, ref vector3d b, ref vector3d c, ref vector3d d)
     {
         m.tris.Add(new triangle(a, b, c));
         m.tris.Add(new triangle(a, c, d));
@@ -273,5 +273,19 @@ public class mesh
         float z3 = z2;
 
         return new vector3d(x3, y3, z3);
+    }
+
+    public static mesh Combine(params mesh[] parts)
+    {
+        mesh m = new();
+        foreach (mesh part in parts) m.tris.AddRange(part.tris);
+        return m;
+    }
+    public static void AppendMesh(mesh targetMesh, mesh sourceMesh)
+    {
+        foreach (var tri in sourceMesh.tris)
+        {
+            targetMesh.tris.Add(tri);
+        }
     }
 }
