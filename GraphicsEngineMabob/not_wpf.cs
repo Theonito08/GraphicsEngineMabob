@@ -37,30 +37,11 @@ public sealed class RenderApp
         options.Size = new Vector2D<int>(ScreenWidth, ScreenHeight);
         options.Title = "GraphicsEngineMabob";
 
-        mesh rocket;
-        mesh body = mesh.CreateCylinder(4.0f, 0.8f, 16);
-        mesh noseCone = mesh.CreateCone(new vector3d(0.0f, 2.0f, 0.0f), new vector3d(0.0f, 3.5f, 0.0f), 0.8f, 0.0f, 16);
-        mesh nozzle = mesh.CreateCone(new vector3d(0.0f, -2.0f, 0.0f), new vector3d(0.0f, -2.5f, 0.0f), 0.5f, 0.7f, 16);
-        rocket = mesh.Combine(body, noseCone, nozzle);
-        for (int i = 0; i < 4; i++)
-        {
-            float angle = i * (2.0f * MathF.PI / 4);
-            mesh fin = new mesh();
-            vector3d v0 = new vector3d(0.8f, -1.8f, 0.0f);
-            vector3d v1 = new vector3d(0.8f, -2.2f, 0.0f);
-            vector3d v2 = new vector3d(1.5f, -2.2f, 0.0f);
-
-            fin.tris.Add(new triangle(ref v0, ref v1, ref v2));
-            fin.tris.Add(new triangle(ref v0, ref v2, ref v1));
-
-            fin = mesh.RotateMesh(fin, 0f, angle * (180.0f / MathF.PI), 0f);
-            mesh.AppendMesh(rocket, fin);
-        }
-
-
-        meshes.Add(rocket);
-
-
+        /* MESH CREATION SPACE
+        Example below:
+        mesh myMesh = mesh.CreateCube(0.5f);
+        meshes.Add(myMesh);
+        */
         window = Window.Create(options);
         window.Load += OnLoad;
         window.Render += OnRender;
