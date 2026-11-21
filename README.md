@@ -4,3 +4,16 @@
 # Q TO AUTO ROTATE
 # USING WINDOWS FORMS, SO ONLY WINDOWS COMPATIBLE
 #YOU CAN HARDCODE IN VECTORS AND TRIANGLES BETWEEN THOSE VECTORS TO CREATE YOUR OWN SHAPES
+
+#CURRENT SHAPE PRESETS:
+Cubes,
+Boxes,
+Cylinders,
+Cones,
+Spheres
+
+#CURRENT CO-ORDINATE GEOMETRY MANIPULATION SUPPORTED:
+Linear Transforms,
+Uniform Enlargement,
+Axis-bound stretching,
+Axis-bound rotation (for both mesh and vectors)
