@@ -8,12 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="RenderForm.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <!-- Window + OpenGL context + input (GLFW under the hood: Windows, Linux, macOS) -->
-        <PackageReference Include="Silk.NET.Windowing" Version="2.22.0"/>
-        <PackageReference Include="Silk.NET.Input" Version="2.22.0"/>
-        <PackageReference Include="Silk.NET.OpenGL" Version="2.22.0"/>
+        <PackageReference Include="Silk.NET.Windowing" Version="2.22.0" />
+        <PackageReference Include="Silk.NET.Input" Version="2.22.0" />
+        <PackageReference Include="Silk.NET.OpenGL" Version="2.22.0" />
         <!-- Dear ImGui renderer/input backend for Silk.NET (pulls in ImGui.NET + native cimgui) -->
-        <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.22.0"/>
+        <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.22.0" />
     </ItemGroup>
 
 </Project>

@@ -1,15 +1,20 @@
-using System.Numerics;
 using ImGuiNET;
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Extensions.ImGui;
 using Silk.NET.Windowing;
+using System.Numerics;
 using static GraphicsEngineMabob.Program;
 
 namespace GraphicsEngineMabob;
 
-public sealed class RenderApp {
+public sealed class RenderApp
+{
+    private bool isRainbowActive = false;
+
+    private readonly List<mesh> meshes = new();
+
     private const int ScreenWidth = 1200;
     private const int ScreenHeight = 1000;
     private float angleX;
@@ -22,18 +27,39 @@ public sealed class RenderApp {
 
     private float hue;
     private Vector3 lineColor = new(0f, 0.5f, 0f);
-    private float lineThickness = 1.5f;
-
-    private mesh towerMesh = null!;
+    private float lineThickness = 0.25f;
 
     private IWindow window = null!;
 
-    public void Run() {
-        towerMesh = CreateTower();
-
+    public void Run()
+    {
         WindowOptions options = WindowOptions.Default;
         options.Size = new Vector2D<int>(ScreenWidth, ScreenHeight);
         options.Title = "GraphicsEngineMabob";
+
+        mesh rocket;
+        mesh body = mesh.CreateCylinder(4.0f, 0.8f, 16);
+        mesh noseCone = mesh.CreateCone(new vector3d(0.0f, 2.0f, 0.0f), new vector3d(0.0f, 3.5f, 0.0f), 0.8f, 0.0f, 16);
+        mesh nozzle = mesh.CreateCone(new vector3d(0.0f, -2.0f, 0.0f), new vector3d(0.0f, -2.5f, 0.0f), 0.5f, 0.7f, 16);
+        rocket = mesh.Combine(body, noseCone, nozzle);
+        for (int i = 0; i < 4; i++)
+        {
+            float angle = i * (2.0f * MathF.PI / 4);
+            mesh fin = new mesh();
+            vector3d v0 = new vector3d(0.8f, -1.8f, 0.0f);
+            vector3d v1 = new vector3d(0.8f, -2.2f, 0.0f);
+            vector3d v2 = new vector3d(1.5f, -2.2f, 0.0f);
+
+            fin.tris.Add(new triangle(ref v0, ref v1, ref v2));
+            fin.tris.Add(new triangle(ref v0, ref v2, ref v1));
+
+            fin = mesh.RotateMesh(fin, 0f, angle * (180.0f / MathF.PI), 0f);
+            mesh.AppendMesh(rocket, fin);
+        }
+
+
+        meshes.Add(rocket);
+
 
         window = Window.Create(options);
         window.Load += OnLoad;
@@ -44,44 +70,41 @@ public sealed class RenderApp {
         window.Dispose();
     }
 
-    private static mesh Combine(params mesh[] parts) {
-        mesh m = new();
-        foreach (mesh part in parts) m.tris.AddRange(part.tris);
-        return m;
-    }
 
-    private static mesh CreateTower() {
-        mesh baseSlab = mesh.CreateBox(new vector3d(-1.5f, -2.4f, -1.5f), new vector3d(1.5f, -2.0f, 1.5f));
-        mesh shaft = mesh.CreateCylinder(4f, 1f, 16);
-        mesh topRing = mesh.Transform(new vector3d(0, 2.2f, 0), mesh.CreateCylinder(0.4f, 1.3f, 16));
-        mesh roof = mesh.CreateCone(new vector3d(0, 2.4f, 0), new vector3d(0, 3.8f, 0), 1.3f, 0f, 16);
 
-        return mesh.Transform(new vector3d(0, -0.7f, 0), Combine(baseSlab, shaft, topRing, roof));
-    }
-
-    private void OnLoad() {
+    private void OnLoad()
+    {
         gl = GL.GetApi(window);
         input = window.CreateInput();
         imgui = new ImGuiController(gl, window, input);
     }
 
-    private void OnClosing() {
+    private void OnClosing()
+    {
         imgui?.Dispose();
         input?.Dispose();
         gl?.Dispose();
     }
 
-    private void OnRender(double deltaTime) {
+    private void OnRender(double deltaTime)
+    {
         float dt = (float)deltaTime;
         imgui.Update(dt);
         ImGuiIOPtr io = ImGui.GetIO();
 
         HandleKeys();
 
-        hue = (hue + 60f * dt) % 360f;
-        lineColor = HslToRgb(hue, 1f, 0.5f);
-
-        if (isAutoSpinning) {
+        if (isRainbowActive)
+        {
+            hue = (hue + 60f * dt) % 360f;
+            lineColor = HslToRgb(hue, 1f, 0.5f);
+        }
+        else
+        {
+            lineColor = new Vector3(0f, 1f, 0f);
+        }
+        if (isAutoSpinning)
+        {
             angleX += 1.0f * dt;
             angleY += 1.5f * dt;
         }
@@ -89,30 +112,32 @@ public sealed class RenderApp {
         gl.ClearColor(0f, 0f, 0f, 1f);
         gl.Clear((uint)ClearBufferMask.ColorBufferBit);
 
-        DrawScene(io.DisplaySize);
+        DrawScene(io.DisplaySize, meshes);
 
         ImGui.Begin("Line");
-        ImGui.SliderFloat("Thickness", ref lineThickness, 0.5f, 5.0f);
+        ImGui.SliderFloat("Thickness", ref lineThickness, 0.25f, 5.0f);
         ImGui.End();
         imgui.Render();
     }
-    
-    private static Vector3 HslToRgb(float h, float s, float l) {
+
+    private static Vector3 HslToRgb(float h, float s, float l)
+    {
         float c = (1 - Math.Abs(2 * l - 1)) * s;
         float x = c * (1 - Math.Abs((h / 60) % 2 - 1));
         float m = l - c / 2;
 
         float r, g, b;
-        if      (h < 60)  { r = c; g = x; b = 0; }
+        if (h < 60) { r = c; g = x; b = 0; }
         else if (h < 120) { r = x; g = c; b = 0; }
         else if (h < 180) { r = 0; g = c; b = x; }
         else if (h < 240) { r = 0; g = x; b = c; }
         else if (h < 300) { r = x; g = 0; b = c; }
-        else              { r = c; g = 0; b = x; }
+        else { r = c; g = 0; b = x; }
         return new Vector3(r + m, g + m, b + m);
     }
 
-    private void HandleKeys() {
+    private void HandleKeys()
+    {
         if (ImGui.GetIO().WantTextInput) return;
 
         if (ImGui.IsKeyPressed(ImGuiKey.Equal) || ImGui.IsKeyPressed(ImGuiKey.KeypadAdd))
@@ -132,7 +157,8 @@ public sealed class RenderApp {
     }
 
     private vector3d MultiplyVectorMatrix(vector3d inputVertex, float angleX, float angleY, float screenW,
-        float screenH) {
+        float screenH)
+    {
         vector3d outputVertex = new();
 
         float rotY_x = inputVertex.x * MathF.Cos(angleY) + inputVertex.z * MathF.Sin(angleY);
@@ -152,7 +178,8 @@ public sealed class RenderApp {
         outputVertex.x = rotX_x * fovRad * aspectRatio;
         outputVertex.y = rotX_y * fovRad;
 
-        if (rotX_z != 0) {
+        if (rotX_z != 0)
+        {
             outputVertex.x /= rotX_z;
             outputVertex.y /= rotX_z;
         }
@@ -166,20 +193,30 @@ public sealed class RenderApp {
         return outputVertex;
     }
 
-    private void DrawScene(Vector2 size) {
+    private void DrawScene(Vector2 size, List<mesh> parts)
+    {
         ImDrawListPtr drawList = ImGui.GetBackgroundDrawList();
         uint color = ImGui.ColorConvertFloat4ToU32(new Vector4(lineColor, 1f));
 
-        foreach (triangle tri in towerMesh.tris) {
-            vector3d p1 = MultiplyVectorMatrix(tri.p[0], angleX, angleY, size.X, size.Y);
-            vector3d p2 = MultiplyVectorMatrix(tri.p[1], angleX, angleY, size.X, size.Y);
-            vector3d p3 = MultiplyVectorMatrix(tri.p[2], angleX, angleY, size.X, size.Y);
+        if (parts != null)
+        {
+            foreach (mesh part in parts)
+            {
+                foreach (var tri in part.tris)
+                {
+                    vector3d p1 = MultiplyVectorMatrix(tri.p[0], angleX, angleY, size.X, size.Y);
+                    vector3d p2 = MultiplyVectorMatrix(tri.p[1], angleX, angleY, size.X, size.Y);
+                    vector3d p3 = MultiplyVectorMatrix(tri.p[2], angleX, angleY, size.X, size.Y);
 
-            drawList.AddTriangle(
-                new Vector2(p1.x, p1.y),
-                new Vector2(p2.x, p2.y),
-                new Vector2(p3.x, p3.y),
-                color, lineThickness);
+                    Vector2 v1 = new Vector2((float)p1.x, (float)p1.y);
+                    Vector2 v2 = new Vector2((float)p2.x, (float)p2.y);
+                    Vector2 v3 = new Vector2((float)p3.x, (float)p3.y);
+
+                    drawList.AddLine(v1, v2, color, lineThickness);
+                    drawList.AddLine(v2, v3, color, lineThickness);
+                    drawList.AddLine(v3, v1, color, lineThickness);
+                }
+            }
         }
     }
 }
