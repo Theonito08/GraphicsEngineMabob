@@ -24,9 +24,9 @@ public sealed class RenderApp
     private ImGuiController imgui = null!;
     private IInputContext input = null!;
     private bool isAutoSpinning;
-
+    
     private float hue;
-    private Vector3 lineColor = new(0f, 0.5f, 0f);
+    private Vector3 lineColor = new(0f, 1f, 0f);
     private float lineThickness = 0.25f;
 
     private IWindow window = null!;
@@ -42,6 +42,7 @@ public sealed class RenderApp
         mesh myMesh = mesh.CreateCube(0.5f);
         meshes.Add(myMesh);
         */
+        
         window = Window.Create(options);
         window.Load += OnLoad;
         window.Render += OnRender;
@@ -80,10 +81,6 @@ public sealed class RenderApp
             hue = (hue + 60f * dt) % 360f;
             lineColor = HslToRgb(hue, 1f, 0.5f);
         }
-        else
-        {
-            lineColor = new Vector3(0f, 1f, 0f);
-        }
         if (isAutoSpinning)
         {
             angleX += 1.0f * dt;
@@ -97,6 +94,11 @@ public sealed class RenderApp
 
         ImGui.Begin("Line");
         ImGui.SliderFloat("Thickness", ref lineThickness, 0.25f, 5.0f);
+        ImGui.Checkbox("Rainbow", ref isRainbowActive);
+        if (!isRainbowActive)
+        {
+            ImGui.ColorEdit3("Colour", ref lineColor);
+        }
         ImGui.End();
         imgui.Render();
     }
