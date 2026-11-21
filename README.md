@@ -27,5 +27,5 @@ Linux needs an OpenGL driver. Just install the .Net 9 sdk from your distro's pac
 
 ## Run
 
-    dotnet run --project Graphics_Engine_Mabob -c Release
+    dotnet run --project GraphicsEngineMabob -c Release
 
