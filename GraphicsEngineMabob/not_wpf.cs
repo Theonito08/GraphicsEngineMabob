@@ -43,8 +43,6 @@ public sealed class RenderApp
         mesh myMesh = mesh.CreateCube(0.5f);
         meshes.Add(myMesh);
         */
-        mesh myMesh = mesh.CreateCube(0.5f);
-        meshes.Add(myMesh);
         
         window = Window.Create(options);
         window.Load += OnLoad;
