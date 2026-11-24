@@ -4,6 +4,8 @@
 
 W/A/S/D or arrows: rotate | +/-: zoom | Q: auto-spin
 
+Mouse3: mouse rotation | MouseWheel Up/Down: zoom
+
 ### YOU CAN HARDCODE IN VECTORS AND TRIANGLES BETWEEN THOSE VECTORS TO CREATE YOUR OWN SHAPES
 
 ## Current shape presets:
