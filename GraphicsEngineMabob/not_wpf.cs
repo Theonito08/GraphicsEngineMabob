@@ -17,7 +17,8 @@ public sealed class RenderApp
 
     private const int ScreenWidth = 1200;
     private const int ScreenHeight = 1000;
-    private float angleX;
+    private const float MouseSensitivity = 0.005f; // radians per pixel
+    private float angleX; // mouse movement angles
     private float angleY;
     private float cameraDistance = 8.0f;
     private GL gl = null!;
@@ -53,8 +54,6 @@ public sealed class RenderApp
         window.Dispose();
     }
 
-
-
     private void OnLoad()
     {
         gl = GL.GetApi(window);
@@ -75,7 +74,10 @@ public sealed class RenderApp
         imgui.Update(dt);
         ImGuiIOPtr io = ImGui.GetIO();
 
+
         HandleKeys();
+        if (ImGui.IsMouseDown(ImGuiMouseButton.Middle)) MouseMove(io);
+        if (io.MouseWheel != 0f) MouseZoom(io);
 
         if (isRainbowActive)
         {
@@ -140,6 +142,21 @@ public sealed class RenderApp
             angleY += 0.1f;
     }
 
+    private void MouseMove(ImGuiIOPtr io)
+    {
+        if (io.WantCaptureMouse) return;
+        
+        angleY += io.MouseDelta.X * MouseSensitivity;
+        angleX += io.MouseDelta.Y * MouseSensitivity;
+    }
+    
+    private void MouseZoom(ImGuiIOPtr io)
+    {
+        if (io.WantCaptureMouse) return;
+        
+        cameraDistance = MathF.Max(3.0f, cameraDistance - io.MouseWheel * 0.5f);
+    }
+
     private vector3d MultiplyVectorMatrix(vector3d inputVertex, float angleX, float angleY, float screenW,
         float screenH)
     {
@@ -182,24 +199,21 @@ public sealed class RenderApp
         ImDrawListPtr drawList = ImGui.GetBackgroundDrawList();
         uint color = ImGui.ColorConvertFloat4ToU32(new Vector4(lineColor, 1f));
 
-        if (parts != null)
+        foreach (mesh part in parts)
         {
-            foreach (mesh part in parts)
+            foreach (var tri in part.tris)
             {
-                foreach (var tri in part.tris)
-                {
-                    vector3d p1 = MultiplyVectorMatrix(tri.p[0], angleX, angleY, size.X, size.Y);
-                    vector3d p2 = MultiplyVectorMatrix(tri.p[1], angleX, angleY, size.X, size.Y);
-                    vector3d p3 = MultiplyVectorMatrix(tri.p[2], angleX, angleY, size.X, size.Y);
+                vector3d p1 = MultiplyVectorMatrix(tri.p[0], angleX, angleY, size.X, size.Y);
+                vector3d p2 = MultiplyVectorMatrix(tri.p[1], angleX, angleY, size.X, size.Y);
+                vector3d p3 = MultiplyVectorMatrix(tri.p[2], angleX, angleY, size.X, size.Y);
 
-                    Vector2 v1 = new Vector2((float)p1.x, (float)p1.y);
-                    Vector2 v2 = new Vector2((float)p2.x, (float)p2.y);
-                    Vector2 v3 = new Vector2((float)p3.x, (float)p3.y);
+                Vector2 v1 = new Vector2((float)p1.x, (float)p1.y);
+                Vector2 v2 = new Vector2((float)p2.x, (float)p2.y);
+                Vector2 v3 = new Vector2((float)p3.x, (float)p3.y);
 
-                    drawList.AddLine(v1, v2, color, lineThickness);
-                    drawList.AddLine(v2, v3, color, lineThickness);
-                    drawList.AddLine(v3, v1, color, lineThickness);
-                }
+                drawList.AddLine(v1, v2, color, lineThickness);
+                drawList.AddLine(v2, v3, color, lineThickness);
+                drawList.AddLine(v3, v1, color, lineThickness);
             }
         }
     }
