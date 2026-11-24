@@ -43,8 +43,6 @@ public sealed class RenderApp
         mesh myMesh = mesh.CreateCube(0.5f);
         meshes.Add(myMesh);
         */
-        mesh myMesh = mesh.CreateCube(0.5f);
-        meshes.Add(myMesh);
         window = Window.Create(options);
         window.Load += OnLoad;
         window.Render += OnRender;
@@ -145,15 +143,15 @@ public sealed class RenderApp
     private void MouseMove(ImGuiIOPtr io)
     {
         if (io.WantCaptureMouse) return;
-        
+
         angleY += io.MouseDelta.X * MouseSensitivity;
         angleX += io.MouseDelta.Y * MouseSensitivity;
     }
-    
+
     private void MouseZoom(ImGuiIOPtr io)
     {
         if (io.WantCaptureMouse) return;
-        
+
         cameraDistance = MathF.Max(3.0f, cameraDistance - io.MouseWheel * 0.5f);
     }
 
