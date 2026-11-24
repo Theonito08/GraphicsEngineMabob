@@ -24,7 +24,7 @@ public sealed class RenderApp
     private ImGuiController imgui = null!;
     private IInputContext input = null!;
     private bool isAutoSpinning;
-    
+
     private float hue;
     private Vector3 lineColor = new(0f, 1f, 0f);
     private float lineThickness = 0.25f;
@@ -42,7 +42,8 @@ public sealed class RenderApp
         mesh myMesh = mesh.CreateCube(0.5f);
         meshes.Add(myMesh);
         */
-        
+        mesh myMesh = mesh.CreateCube(0.5f);
+        meshes.Add(myMesh);
         window = Window.Create(options);
         window.Load += OnLoad;
         window.Render += OnRender;
